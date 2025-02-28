@@ -13,7 +13,7 @@ app.use(cors()); // Thêm CORS
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Chuyển hướng tất cả request khác về index.html (cho React Router hoạt động)
-app.get('', (req, res) => {
+app.get('/orderslist', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
