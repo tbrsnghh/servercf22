@@ -36,8 +36,13 @@ app.get('/orders', (req, res) => {
 
 // API tạo đơn hàng mới
 app.post('/orders', (req, res) => {
-    const newOrder = req.body;
     const data = readDB();
+    const order_id = data.orders.length > 0 ? data.orders[data.orders.length - 1].id + 1 : 1;
+    if (req.customerName == ''){
+        req.customerName = 'Khách lạ';
+    }
+    const newOrder = {...req.body, id: order_id};
+    
     data.orders.push(newOrder);
     writeDB(data);
     res.status(201).json(newOrder);
