@@ -72,6 +72,9 @@ app.put('/orders/:id/status', (req, res) => {
     res.json(order);
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+// app.listen(PORT, '0.0.0.0', () => {
+//     console.log(`Server running at http://localhost:${PORT}`);
+// });
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
