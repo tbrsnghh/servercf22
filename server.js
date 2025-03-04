@@ -65,17 +65,28 @@ app.put('/orders/:id/status', (req, res) => {
         return res.status(404).json({ error: 'Order not found' });
     }
 
-    const currentIndex = orderStatuses.indexOf(order.status);
-    const newIndex = orderStatuses.indexOf(status);
-
-    if (newIndex === -1 || newIndex < currentIndex) {
-        return res.status(400).json({ error: 'Invalid status transition' });
+    if (order.status === 'done') {
+        return res.status(400).json({ error: 'Cannot modify a completed order' });
     }
 
-    order.status = status;
+    // Cho phép hủy đơn từ bất kỳ trạng thái nào trừ "done"
+    if (status === 'cancelled') {
+        order.status = 'cancelled';
+    } else {
+        const currentIndex = orderStatuses.indexOf(order.status);
+        const newIndex = orderStatuses.indexOf(status);
+        
+        if (newIndex === -1 || newIndex < currentIndex) {
+            return res.status(400).json({ error: 'Invalid status transition' });
+        }
+        
+        order.status = status;
+    }
+
     writeDB(data);
     res.json(order);
 });
+
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running at http://localhost:${PORT}`);
