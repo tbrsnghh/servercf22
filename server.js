@@ -3,7 +3,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const app = express();
-const PORT = 3000;
+const PORT = 3002;
 
 const DB_FILE = path.join(__dirname, 'db.json');
 app.use(express.json());
